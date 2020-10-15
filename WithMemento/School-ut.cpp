@@ -94,3 +94,24 @@ TEST_F(SchoolTest, ShouldChangeNameAndRestorePreviousNameFromBackup) {
     school.RestoreBackup(office.GetSchoolBackup());
     ASSERT_EQ(school.GetFirstName(id), students[1].GetFirstName());
 }
+
+TEST_F(SchoolTest, ShouldChangeLastNameForAllStudentsAndRestorePreviousLastNameFromBackup) {
+    AddAllStudents();
+    std::string newLastName("Polak");
+
+    for (size_t i = 0; i < students.size(); i++) {
+        office.CreateSchoolBackup(school.CreateBackup());
+        school.ChangeLastName(students[i].GetId(), newLastName);
+        ASSERT_NE(school.GetLastName(students[i].GetId()), students[i].GetLastName());
+        ASSERT_EQ(school.GetFirstName(students[i].GetId()), students[i].GetFirstName());
+    }
+
+    for (size_t i = 0; i < students.size(); i++) {
+        school.RestoreBackup(office.GetSchoolBackup());
+    }
+
+    for (const auto& student : students) {
+        ASSERT_EQ(school.GetFirstName(student.GetId()), student.GetFirstName());
+        ASSERT_EQ(school.GetLastName(student.GetId()), student.GetLastName());
+    }
+}
