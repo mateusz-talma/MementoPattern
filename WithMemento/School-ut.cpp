@@ -57,7 +57,7 @@ TEST_F(SchoolTest, ShouldRestoreDeletedStudentFromBackup) {
     school.DeleteStudent(idToDelete);
 
     ASSERT_EQ(school.GetStudentAmount(), students.size() - 1);
-    school.RestoreBackup(office.GetStudentsBackup());
+    school.RestoreBackup(office.GetSchoolBackup());
     ASSERT_EQ(school.GetStudentAmount(), students.size());
     ASSERT_EQ(school.GetFirstName(idToDelete), nameToDelete);
 }

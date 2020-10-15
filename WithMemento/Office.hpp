@@ -1,12 +1,12 @@
 #include <list>
 #include <memory>
-#include "StudentsBackup.hpp"
+#include "SchoolBackup.hpp"
 
 class Office {
 public:
-    void CreateSchoolBackup(std::unique_ptr<StudentsBackup> backup);
-    std::unique_ptr<StudentsBackup> GetStudentsBackup();
+    void CreateSchoolBackup(std::unique_ptr<SchoolBackup> backup);
+    std::unique_ptr<SchoolBackup> GetSchoolBackup();
 
 private:
-    std::list<std::unique_ptr<StudentsBackup>> schoolBackups;
+    std::list<std::unique_ptr<SchoolBackup>> schoolBackups;
 };

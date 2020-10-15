@@ -1,7 +1,7 @@
 #include "School.hpp"
-#include "StudentsBackup.hpp"
 #include <algorithm>
 #include <memory>
+#include "SchoolBackup.hpp"
 
 auto School::GetStudentById(unsigned int id) {
     return std::find_if(students_.begin(), students_.end(),
@@ -57,10 +57,10 @@ std::string School::GetLastName(unsigned int id) {
 
 // Memento methods
 
-std::unique_ptr<StudentsBackup> School::CreateBackup() {
-    return std::make_unique<StudentsBackup>(*this);
+std::unique_ptr<SchoolBackup> School::CreateBackup() {
+    return std::make_unique<SchoolBackup>(*this);
 }
 
-void School::RestoreBackup(std::unique_ptr<StudentsBackup> backup) {
+void School::RestoreBackup(std::unique_ptr<SchoolBackup> backup) {
     *this = backup->GetSchool();
 }

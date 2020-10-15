@@ -1,10 +1,10 @@
 #pragma once
 #include "School.hpp"
-class StudentsBackup {
+class SchoolBackup {
     friend class School;
 
 public:
-    StudentsBackup(School school);
+    SchoolBackup(School school);
 
 private:
     School GetSchool() { return school_; }
