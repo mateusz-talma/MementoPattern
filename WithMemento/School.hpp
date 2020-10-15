@@ -17,5 +17,7 @@ public:
     size_t GetStudentAmount() { return students_.size();}
 
 private:
+    auto GetStudentById(unsigned int id);
+
     std::vector<std::shared_ptr<Student>> students_;
 };
