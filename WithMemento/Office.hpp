@@ -4,9 +4,9 @@
 
 class Office {
 public:
-    void SetStudentsBackup(std::unique_ptr<StudentsBackup> backup);
+    void CreateSchoolBackup(std::unique_ptr<StudentsBackup> backup);
     std::unique_ptr<StudentsBackup> GetStudentsBackup();
 
 private:
-    std::list<std::unique_ptr<StudentsBackup>> studentBackups_;
+    std::list<std::unique_ptr<StudentsBackup>> schoolBackups;
 };
