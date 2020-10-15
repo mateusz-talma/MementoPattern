@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 enable_testing()
 
-project(Student)
+project(School)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -31,11 +31,11 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp Student.cpp School.cpp)
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
-add_executable(${PROJECT_NAME}-ut Student-ut.cpp )
+add_executable(${PROJECT_NAME}-ut School-ut.cpp School.cpp Student.cpp)
 target_compile_options(${PROJECT_NAME}-ut PRIVATE ${FLAGS})
 target_link_libraries(${PROJECT_NAME}-ut PUBLIC gtest_main)
 
-add_test(NAME Student COMMAND ${PROJECT_NAME}-ut)
+add_test(NAME School COMMAND ${PROJECT_NAME}-ut)
