@@ -1,8 +1,13 @@
 #pragma once
-
+#include "School.hpp"
 class StudentsBackup {
-    public:
+    friend class School;
 
-    private:
+public:
+    StudentsBackup(School school);
 
+private:
+    School GetSchool() { return school_; }
+
+    School school_;
 };

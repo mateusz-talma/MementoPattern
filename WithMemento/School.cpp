@@ -1,4 +1,5 @@
 #include "School.hpp"
+#include "StudentsBackup.hpp"
 #include <algorithm>
 #include <memory>
 
@@ -52,4 +53,14 @@ std::string School::GetLastName(unsigned int id) {
         return (*it)->GetLastName();
     }
     return "";
+}
+
+// Memento methods
+
+std::unique_ptr<StudentsBackup> School::CreateBackup() {
+    return std::make_unique<StudentsBackup>(*this);
+}
+
+void School::RestoreBackup(std::unique_ptr<StudentsBackup> backup) {
+    *this = backup->GetSchool();
 }
