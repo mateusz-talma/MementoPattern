@@ -9,8 +9,6 @@ class School {
 public:
     void AddStudent(std::string firstName, std::string lastName, unsigned int id);
     void DeleteStudent(unsigned int id);
-    void ChangeFirstName(unsigned int id);
-    void ChangeLastName(unsigned int id);
     void ChangeFirstName(unsigned int id, std::string firstName);
     void ChangeLastName(unsigned int id, std::string lastName);
 
@@ -25,5 +23,5 @@ public:
 private:
     auto GetStudentById(unsigned int id);
 
-    std::vector<std::shared_ptr<Student>> students_;
+    std::vector<Student> students_;
 };

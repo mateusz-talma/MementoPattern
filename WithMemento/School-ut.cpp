@@ -49,7 +49,7 @@ TEST_F(SchoolTest, ShouldSetNewLastName) {
     ASSERT_EQ(school.GetLastName(id), newLastName);
 }
 
-TEST_F(SchoolTest, ShouldRestoreDeletedStudentFromBackup) {
+TEST_F(SchoolTest, ShouldDeleteAndRestoreDeletedStudentFromBackup) {
     AddAllStudents();
     auto idToDelete = students[2].GetId();
     auto nameToDelete = students[2].GetFirstName();
@@ -60,4 +60,37 @@ TEST_F(SchoolTest, ShouldRestoreDeletedStudentFromBackup) {
     school.RestoreBackup(office.GetSchoolBackup());
     ASSERT_EQ(school.GetStudentAmount(), students.size());
     ASSERT_EQ(school.GetFirstName(idToDelete), nameToDelete);
+}
+
+TEST_F(SchoolTest, ShouldDeleteAllStudentsAndRestoreAllDeletedStudentsFromBackup) {
+    AddAllStudents();
+    for (size_t i = 0; i < students.size(); i++) {
+        office.CreateSchoolBackup(school.CreateBackup());
+        school.DeleteStudent(students[i].GetId());
+        ASSERT_EQ(school.GetStudentAmount(), students.size() - i - 1);
+    }
+
+    for (size_t i = 1; i <= students.size(); i++) {
+        school.RestoreBackup(office.GetSchoolBackup());
+        ASSERT_EQ(school.GetStudentAmount(), i);
+    }
+
+    for (const auto& student : students) {
+        ASSERT_EQ(school.GetFirstName(student.GetId()), student.GetFirstName());
+        ASSERT_EQ(school.GetLastName(student.GetId()), student.GetLastName());
+    }
+}
+
+TEST_F(SchoolTest, ShouldChangeNameAndRestorePreviousNameFromBackup) {
+    AddAllStudents();
+    std::string newName("Joseph");
+
+    office.CreateSchoolBackup(school.CreateBackup());
+    auto id = students[1].GetId();
+
+    school.ChangeFirstName(id, newName);
+    ASSERT_NE(school.GetFirstName(id), students[1].GetFirstName());
+
+    school.RestoreBackup(office.GetSchoolBackup());
+    ASSERT_EQ(school.GetFirstName(id), students[1].GetFirstName());
 }
