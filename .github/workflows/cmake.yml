@@ -1,0 +1,40 @@
+name: CMake CI
+
+on: [push, pull_request]
+
+jobs:
+  ctest:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Create build folder
+      working-directory: WithMemento
+      run: mkdir build
+    - name: Compile
+      working-directory: WithMemento/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: WithMemento/build
+      run: ctest -V
+
+  valgrind:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: Install valgrind
+      run: sudo apt-get install valgrind
+    - name: Create build dir
+      run: mkdir WithMemento/build
+    - name: Compile
+      working-directory: WithMemento/build
+      run: |
+        cmake ..
+        make
+    - name: Run valgrind
+      working-directory: WithMemento/build
+      run: valgrind ./School-ut
