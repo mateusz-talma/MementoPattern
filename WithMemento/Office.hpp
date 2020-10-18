@@ -2,6 +2,10 @@
 #include <memory>
 #include "SchoolBackup.hpp"
 
+namespace Command {
+constexpr char QUIT = 'q';
+}
+
 class Office {
 public:
     void CreateSchoolBackup(std::unique_ptr<SchoolBackup> backup);
