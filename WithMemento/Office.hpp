@@ -8,7 +8,7 @@ public:
     std::unique_ptr<SchoolBackup> GetSchoolBackup();
 
 private:
-
     std::list<std::unique_ptr<SchoolBackup>> schoolBackups;
+    
     void AddNewStudent(std::string name, std::string lastName, unsigned int id);
 };

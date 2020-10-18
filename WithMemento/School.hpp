@@ -22,7 +22,7 @@ public:
     void RestoreBackup(std::unique_ptr<SchoolBackup> backup);
 
 private:
-    auto GetStudentById(unsigned int id);
-
     std::vector<Student> students_;
+
+    auto GetStudentById(unsigned int id);
 };
