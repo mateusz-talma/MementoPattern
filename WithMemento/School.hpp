@@ -11,6 +11,7 @@ public:
     void DeleteStudent(unsigned int id);
     void ChangeFirstName(unsigned int id, std::string firstName);
     void ChangeLastName(unsigned int id, std::string lastName);
+    void PrintAllStudents();
 
     std::string GetFirstName(unsigned int id);
     std::string GetLastName(unsigned int id);

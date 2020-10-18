@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <memory>
 #include "SchoolBackup.hpp"
+#include "TextTable.h"
 
 auto School::GetStudentById(unsigned int id) {
     return std::find_if(students_.begin(), students_.end(),
@@ -59,4 +60,22 @@ std::unique_ptr<SchoolBackup> School::CreateBackup() {
 
 void School::RestoreBackup(std::unique_ptr<SchoolBackup> backup) {
     *this = backup->GetSchool();
+}
+
+void School::PrintAllStudents() {
+    TextTable t('-', '|', '+');
+
+    t.add("Id");
+    t.add("First Name");
+    t.add("Last Name");
+    t.endOfRow();
+
+    for (const auto& student : students_) {
+        t.add(std::to_string(student.GetId()));
+        t.add(student.GetFirstName());
+        t.add(student.GetLastName());
+        t.endOfRow();
+    }
+
+    std::cout << t;
 }
