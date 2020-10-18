@@ -14,11 +14,13 @@ constexpr char CHANGE_FIRST_NAME = 'f';
 constexpr char CHANGE_LAST_NAME = 'l';
 constexpr char DELETE_STUDENT = 'd';
 constexpr char PRINT_HELP = 'h';
+constexpr char UNDO = 'u';
 constexpr char QUIT = 'q';
 
 }  // namespace Command
 
-void AddNewStudent(School& school) {
+void AddNewStudent(School& school, Office& office) {
+    office.CreateSchoolBackup(school.CreateBackup());
     std::string firstName, lastName;
     unsigned int id = 0;
 
@@ -29,7 +31,9 @@ void AddNewStudent(School& school) {
     school.AddStudent(firstName, lastName, id);
 }
 
-void ChangeFirstName(School& school) {
+void ChangeFirstName(School& school, Office& office) {
+    office.CreateSchoolBackup(school.CreateBackup());
+
     std::string firstName;
     unsigned int id = 0;
 
@@ -39,17 +43,21 @@ void ChangeFirstName(School& school) {
     school.ChangeFirstName(id, firstName);
 }
 
-void ChangeLastName(School& school) {
+void ChangeLastName(School& school, Office& office) {
+    office.CreateSchoolBackup(school.CreateBackup());
+
     std::string lastName;
     unsigned int id = 0;
 
     std::cin >> lastName;
     std::cin >> id;
 
-    school.ChangeFirstName(id, lastName);
+    school.ChangeLastName(id, lastName);
 }
 
-void DeleteStudent(School& school) {
+void DeleteStudent(School& school, Office& office) {
+    office.CreateSchoolBackup(school.CreateBackup());
+
     unsigned int id = 0;
     std::cin >> id;
 
@@ -61,6 +69,8 @@ void PrintStudents(School& school) {
 }
 
 void PrintInfoScreen() {
+    system("clear");
+
     std::cout << "Use one of the commands below:\n";
     TextTable t('-', '|', '+');
     t.add("Command");
@@ -83,8 +93,12 @@ void PrintInfoScreen() {
     t.add("Change last name (<last name> <id>)");
     t.endOfRow();
 
-    t.add("(d)elete)");
+    t.add("(d)elete");
     t.add("Delete student (<id>)");
+    t.endOfRow();
+
+    t.add("(u)ndo");
+    t.add("Undo last operation");
     t.endOfRow();
 
     t.add("(h)elp");
@@ -98,31 +112,45 @@ void PrintInfoScreen() {
     std::cout << t;
 }
 
-std::map<char, std::function<void(School&)>> functionsMap{
+void Undo(School& school, Office& office) {
+    school.RestoreBackup(office.GetSchoolBackup());
+    school.PrintAllStudents();
+}
+
+std::map<char, std::function<void(School&, Office&)>> functionsMap{
     {Command::ADD_STUDENT, AddNewStudent},
-    {Command::PRINT_STUDENTS, PrintStudents},
     {Command::CHANGE_FIRST_NAME, ChangeFirstName},
     {Command::CHANGE_LAST_NAME, ChangeLastName},
     {Command::DELETE_STUDENT, DeleteStudent}};
 
-void ExecuteCommand(char cmd, School& school) {
+void ExecuteCommand(char cmd, School& school, Office& office) {
     auto it = functionsMap.find(cmd);
     if (it != functionsMap.end()) {
-        functionsMap[cmd](school);
+        functionsMap[cmd](school, office);
+    } else if (cmd == Command::PRINT_STUDENTS) {
+        school.PrintAllStudents();
     } else if (cmd == Command::PRINT_HELP) {
         PrintInfoScreen();
+    } else if (cmd == Command::UNDO) {
+        Undo(school, office);
     }
 }
 
 int main() {
     School school;
     Office office;
+
+    school.AddStudent("Mariusz", "Nowak", 101);
+    school.AddStudent("Jan", "Kowalski", 102);
+    school.AddStudent("Piotr", "Nowak", 103);
+    school.AddStudent("Adam", "Malysz", 104);
+
     char cmd;
     PrintInfoScreen();
     do {
-        std::cout << "Type key...";
+        std::cout << "Type the key...";
         std::cin >> cmd;
-        ExecuteCommand(cmd, school);
+        ExecuteCommand(cmd, school, office);
     } while (cmd != Command::QUIT);
 
     return 0;

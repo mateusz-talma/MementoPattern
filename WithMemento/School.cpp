@@ -59,10 +59,14 @@ std::unique_ptr<SchoolBackup> School::CreateBackup() {
 }
 
 void School::RestoreBackup(std::unique_ptr<SchoolBackup> backup) {
-    *this = backup->GetSchool();
+    if (backup) {
+        *this = backup->GetSchool();
+    }
 }
 
 void School::PrintAllStudents() {
+    std::system("clear");
+
     TextTable t('-', '|', '+');
 
     t.add("Id");
