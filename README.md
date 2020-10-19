@@ -16,6 +16,49 @@ Zastosowanie wzorca projektowego Pamiątka pozwala zaimplementować ostatnią fu
 ![alt text](ClassDiagram.png "Struktura klas")
 
 
+### Tworzenie snapshota
+
+```cpp
+    office.CreateSchoolBackup(school.CreateBackup());
+```
+
+```cpp
+std::unique_ptr<SchoolBackup> School::CreateBackup() {
+    return std::make_unique<SchoolBackup>(*this);
+}
+```
+
+```cpp
+void Office::CreateSchoolBackup(std::unique_ptr<SchoolBackup> backup) {
+    schoolBackups.emplace_back(std::move(backup));
+}
+```
+
+### Przywrócenie snapshota
+
+```cpp
+    school.RestoreBackup(office.GetSchoolBackup());
+```
+
+```cpp
+std::unique_ptr<SchoolBackup> Office::GetSchoolBackup() {
+    std::unique_ptr<SchoolBackup> lastBackup = nullptr;
+    if (!schoolBackups.empty()) {
+        lastBackup = std::move(schoolBackups.back());
+        schoolBackups.pop_back();
+    }
+    return lastBackup;
+}
+```
+
+```cpp
+void School::RestoreBackup(std::unique_ptr<SchoolBackup> backup) {
+    if (backup) {
+        *this = backup->GetSchool();
+    }
+}
+```
+
 ## Wady
 
 - duże użycie pamięci
