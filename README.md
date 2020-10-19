@@ -67,3 +67,8 @@ void School::RestoreBackup(std::unique_ptr<SchoolBackup> backup) {
 
 - Tworzenie snapshotów bez konieczności naruszania hermetyzacji
 - Klasa zarządzająca odpowiada za zarządzanie historią zmian, klasa źródłowa nie jest odpowiedzialna za przywracanie zmian (Single Responsibility Principle)
+
+
+## Źródła:
+- https://refactoring.guru/design-patterns/memento
+- W przykładowym programie użyto biblioteki nagłówkowej do formatowania tekstu w konsoli: https://github.com/haarcuba/cpp-text-table
