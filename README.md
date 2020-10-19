@@ -13,3 +13,4 @@ Rozważmy przykład aplikacji pozwalającej na modyfikacje listy studentów ucze
 Zastosowanie wzorca projektowego Pamiątka pozwala zaimplementować ostatnią funkcjonalność. 
 
 ### Struktura klas
+![alt text](ClassDiagram.png "Struktura klas")
