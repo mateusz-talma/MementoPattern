@@ -3,7 +3,6 @@
 
 class SchoolBackup {
     friend class School;
-    friend class Office;
 
 public:
     SchoolBackup(School school);
