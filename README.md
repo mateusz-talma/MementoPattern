@@ -2,6 +2,12 @@
 ## Wstęp
 Wzorzec projektowy Pamiątka pozwala zaimplementować funckję "cofnij" znaną z wielu aplikacji (edytory tesktu, programy graficzne itp.). 
 
+## Pojęcia
+- Klasa "Zarządca" - klasa przechowująca stany obiektów i zarządzająca nimi
+- Klasa "Pamiątki" - klasa odpowiedzialna za wykonywanie kopii stanu obiektu oraz jego przywracanie
+- Klasa "Źródłowa" - klasa z danymi źródłowymi, które chcemy składować w celu możliwości wycofania zmian
+
+
 ## Przykład
 
 Rozważmy przykład aplikacji pozwalającej na modyfikacje listy studentów uczelni. Zadaniem aplikacji jest przechowywanie podstawowych danych studentów: imię, nazwisko, numer studenta. Ponadto aplikacja udostępnia następujące funkcjonalności:
