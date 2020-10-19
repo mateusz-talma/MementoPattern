@@ -4,6 +4,7 @@
 
 void Office::AddNewStudent(School& school) {
 	CreateSchoolBackup(school.CreateBackup());
+
 	std::string firstName, lastName;
 	unsigned int id = 0;
 
