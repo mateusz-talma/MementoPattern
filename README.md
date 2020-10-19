@@ -14,3 +14,13 @@ Zastosowanie wzorca projektowego Pamiątka pozwala zaimplementować ostatnią fu
 
 ### Struktura klas
 ![alt text](ClassDiagram.png "Struktura klas")
+
+
+## Wady
+
+- duże użycie pamięci
+
+## Zalety
+
+- Tworzenie snapshotów bez konieczności naruszania hermetyzacji
+- Klasa zarządzająca odpowiada za zarządzanie historią zmian, klasa źródłowa nie jest odpowiedzialna za przywracanie zmian (Single Responsibility Principle)
